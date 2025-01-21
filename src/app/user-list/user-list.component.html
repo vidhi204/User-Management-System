@@ -1,0 +1,38 @@
+<ng-template #templatePopup>
+  <div class="medication-popup p-4">
+    <form [formGroup]="form" class="user-form row g-3 align-items-center">
+      <div class="form-field col-auto">
+        <label class="col-form-label">Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+        <div class="red"  *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">
+          Name is required.
+        </div>
+      </div>
+    
+      <div class="form-field col-auto">
+        <label class="col-form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+        <div class="red" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">
+          Email is required.
+        </div>
+        <div class="red"  *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched">
+          Enter a valid email address.
+        </div>
+      </div>
+    
+      <div class="form-field col-auto">
+        <label class="col-form-label">Role</label>
+        <select class="form-control" formControlName="role">
+          <option value="Admin">Admin</option>
+          <option value="User">User</option>
+        </select>
+      </div>
+    </form>
+    
+    <div class="dialog-actions mt-4 d-flex justify-content-between">
+      <button (click)="modalRef.hide();" class="icon-btn btn btn-danger w-100 me-3">Cancel</button>
+      <button (click)="save()" class="icon-btn btn btn-success w-100" [disabled]="form.invalid">Save</button>
+    </div>
+  </div>
+</ng-template>
+

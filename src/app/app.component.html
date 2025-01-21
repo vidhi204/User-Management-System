@@ -1,0 +1,48 @@
+<div class="container p-5 border">
+ <div class="d-flex justify-content-between mb-4 row">
+  <div class="search-field col-10">
+    <input
+    type="text"
+    class="form-control w-75"
+    [(ngModel)]="searchQuery"
+    (input)="applyFilters()"
+    placeholder="Search by name or email"
+  />
+</div>
+  <div class="col-2 text-end">
+    <button class="btn btn-primary" (click)="addUser()">Add User</button>
+  </div>
+</div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="row">
+        <th class="col text-center" (click)="onSort('name')">Name<span *ngIf="sortColumn === 'name'"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span></th>
+        <th class="col text-center" (click)="onSort('email')">Email<span *ngIf="sortColumn === 'email'"> {{ sortOrder === 'asc' ? '▲' : '▼' }}</span></th>
+        <th class="col text-center">Role</th>
+        <th class="col text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers" class="row">
+        <td class="col text-center">{{ user.name }}</td>
+        <td class="col text-center">{{ user.email }}</td>
+        <td class="col text-center">{{ user.role }}</td>
+        <td class="col text-center">
+          <button class="icon-btn btn btn-success me-4" (click)="addUser(user)">Edit </button>
+          <button class="icon-btn btn btn-danger" (click)="deleteUser(user)"> Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination">
+    <button
+      *ngFor="let page of [].constructor(totalPages); let index = index"
+      [class.active]="currentPage === index + 1"
+      (click)="onPageChange(index + 1)">
+      {{ index + 1 }}
+    </button>
+  </div>
+</div>
+
+<app-user-list #templatePopup ></app-user-list>
